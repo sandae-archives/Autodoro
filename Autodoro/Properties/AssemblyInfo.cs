@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("Autodoro")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Sandae Macalalag")]
 [assembly: AssemblyProduct("Autodoro")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
