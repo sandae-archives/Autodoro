@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using Autodoro.Model;
+using Autodoro.Lib;
 using Gma.System.MouseKeyHook;
 
 namespace Autodoro.ViewModel
@@ -15,7 +16,9 @@ namespace Autodoro.ViewModel
         private string activityName = "Focus";
         private string duration = "00:00";
 
-        public Pomodoro Pomodoro { get; set; }
+        private Pomodoro Pomodoro { get; set; }
+
+        public string AppVersion { get; private set; } = "Autodoro - v" + Util.GetAppVersion();
 
         public MainWindowViewModel()
         {
@@ -69,6 +72,7 @@ namespace Autodoro.ViewModel
                 OnPropertyChanged(nameof(Duration));
             }
         }
+
 
         public string ActivityName
         {

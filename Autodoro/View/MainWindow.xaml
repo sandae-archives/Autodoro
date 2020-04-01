@@ -15,7 +15,7 @@
         mc:Ignorable="d"
         WindowStyle="SingleBorderWindow"
         ResizeMode="NoResize"
-        Title="Autodoro" Height="250" Width="400" WindowStartupLocation="CenterScreen">
+        Title="{Binding AppVersion}" Height="250" Width="400" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />

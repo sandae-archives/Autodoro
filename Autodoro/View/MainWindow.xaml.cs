@@ -1,4 +1,5 @@
-﻿using System.Media;
+﻿using System;
+using System.Media;
 using System.Windows;
 using Autodoro.ViewModel;
 
@@ -9,7 +10,7 @@ namespace Autodoro
     /// </summary>
     public partial class MainWindow : Window
     {
-        private SoundPlayer ding = new SoundPlayer(Properties.Resources.ding);
+        private readonly SoundPlayer ding = new SoundPlayer(Properties.Resources.ding);
 
         public MainWindow()
         {
@@ -26,6 +27,7 @@ namespace Autodoro
                 Activate();
                 Focus();
             };
+
         }
     }
 }
