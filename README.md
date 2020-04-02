@@ -1,6 +1,6 @@
 # Autodoro (Automated Pomodoro counter)
 
-![autodoro screen](doc/autodoro.png){ width="800" height="600" style="display: block; margin: 0 auto" }
+![autodoro screen](doc/autodoro.png)
 
 Tracks when you are active on your computer and automatically starts/stops pomodoro timer.
 
