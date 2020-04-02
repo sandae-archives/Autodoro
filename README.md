@@ -8,4 +8,4 @@ If you have been idled for 12 minutes, the timer stops.
 
 Pomodoro count are recorder per day.
 
-![autodoro screen](docs/autodoro.png)
+![autodoro screen](doc/autodoro.png)
