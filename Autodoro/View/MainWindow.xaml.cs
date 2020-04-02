@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Media;
 using System.Windows;
+using Autodoro.Model;
 using Autodoro.ViewModel;
+using LiteDB;
 
 namespace Autodoro
 {
@@ -28,6 +30,7 @@ namespace Autodoro
                 Focus();
             };
 
+            Console.WriteLine(DateTime.Now.Date);
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Windows.Threading;
 using Autodoro.Model;
 using Autodoro.Lib;
 using Gma.System.MouseKeyHook;
+using LiteDB;
 
 namespace Autodoro.ViewModel
 {
@@ -15,6 +16,7 @@ namespace Autodoro.ViewModel
     {
         private string activityName = "Focus";
         private string duration = "00:00";
+        private int pomodoroCount = 0;
 
         private Pomodoro Pomodoro { get; set; }
 
@@ -24,9 +26,24 @@ namespace Autodoro.ViewModel
         {
             Pomodoro = new Pomodoro();
 
+            var repo = new LogRepository();
+
+            PomodoroCount = repo.FindAllToday().Count();
+
+
             Pomodoro.BreakTimeRaised += (s, e) =>
             {
                 ActivityName = "Break";
+
+                repo.Add(new Log
+                {
+                    Activity = "Focus",
+                    StartTime = DateTime.Now.Subtract(new TimeSpan(0, 25, 0)),
+                    EndTime = DateTime.Now
+                });
+
+                PomodoroCount = repo.FindAllToday().Count();
+
                 OnBreakTimeRaised(new EventArgs());
             };
 
@@ -58,6 +75,19 @@ namespace Autodoro.ViewModel
             Hook.GlobalEvents().KeyDown += (sender, e) => Pomodoro.LastActivityTime = DateTime.Now;
             Hook.GlobalEvents().KeyPress += (sender, e) => Pomodoro.LastActivityTime = DateTime.Now;
             Hook.GlobalEvents().MouseMove += (sender, e) => Pomodoro.LastActivityTime = DateTime.Now;
+        }
+
+        public int PomodoroCount
+        {
+            get
+            {
+                return pomodoroCount;
+            }
+            set
+            {
+                pomodoroCount = value;
+                OnPropertyChanged(nameof(PomodoroCount));
+            }
         }
 
         public string Duration

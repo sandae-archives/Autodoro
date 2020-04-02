@@ -34,9 +34,8 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock Style="{DynamicResource MaterialDesignCaptionTextBlock}" Text="Focus: 2" />
-            <TextBlock Style="{DynamicResource MaterialDesignCaptionTextBlock}" Text=", " />
-            <TextBlock Style="{DynamicResource MaterialDesignCaptionTextBlock}" Text="Uptime: 0h 26m" />
+            <TextBlock Style="{DynamicResource MaterialDesignCaptionTextBlock}" 
+                       Text="{Binding PomodoroCount, StringFormat=Focus: {0}}" />
         </StackPanel>
 
     </Grid>

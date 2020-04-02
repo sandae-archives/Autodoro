@@ -10,8 +10,8 @@ namespace Autodoro.Model
     public class Pomodoro 
     {
         const int ALLOWED_IDLE_MINUTES = 12;
-        const int BREAK_MINUTES = 5;
-        const int WORK_MINUTES = 25;
+        const int BREAK_MINUTES = 2;
+        const int WORK_MINUTES = 1;
 
         public bool IsBreakTime { get; private set; }
         public DateTime LastBreakTime { get; private set; } = DateTime.Now;

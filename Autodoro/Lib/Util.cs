@@ -16,7 +16,7 @@ namespace Autodoro.Lib
                 return ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
             } catch (InvalidDeploymentException)
             {
-                return "0.0.0";
+                return "0.0.0.0";
             }
         }
     }
