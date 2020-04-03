@@ -35,7 +35,7 @@
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock Style="{DynamicResource MaterialDesignCaptionTextBlock}" 
-                       Text="{Binding PomodoroCount, StringFormat=Focus: {0}}" />
+                       Text="{Binding PomodoroCount, StringFormat=You completed {0} pomodoro today.}" />
         </StackPanel>
 
     </Grid>

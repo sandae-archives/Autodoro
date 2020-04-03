@@ -9,7 +9,7 @@ namespace Autodoro.Model
 {
     public class Pomodoro 
     {
-        const int ALLOWED_IDLE_MINUTES = 12;
+        const int ALLOWED_IDLE_MINUTES = 5;
         const int BREAK_MINUTES = 5;
         const int WORK_MINUTES = 25;
 

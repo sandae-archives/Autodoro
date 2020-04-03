@@ -29,8 +29,6 @@ namespace Autodoro
                 Activate();
                 Focus();
             };
-
-            Console.WriteLine(DateTime.Now.Date);
         }
     }
 }
