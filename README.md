@@ -8,8 +8,9 @@ Tracks when you are active on your computer and automatically starts/stops pomod
  - If you have been **idled for 5 minutes**, the timer stops.
  - Pomodoro count are **recorded per day**.
 
+[Download](https://github.com/sandaemc/Autodoro/releases)
 
 
 ## License
 
-Copyright © 2020 Sandae Macalalag
+Copyright Â© 2020 Sandae Macalalag
