@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Threading;
-using Autodoro.Model;
 using Autodoro.Lib;
+using Autodoro.Model;
 using Gma.System.MouseKeyHook;
-using LiteDB;
 
 namespace Autodoro.ViewModel
 {
@@ -16,14 +13,18 @@ namespace Autodoro.ViewModel
     {
         private string activityName = "Focus";
         private string duration = "00:00";
-        private int pomodoroCount = 0;
-
-        private Pomodoro Pomodoro { get; set; }
-
-        public string AppVersion { get; private set; } = "Autodoro - v" + Util.GetAppVersion();
+        private int pomodoroCount;
+        private PomodoroTimer pomodoroTimer;
 
         public MainWindowViewModel()
         {
+            PomodoroTimer = GetNextPomodoro(null);
+            PomodoroTimer.TimerDoneRaised += (s, e) => { Console.WriteLine(PomodoroTimer.Name); };
+
+            UpdateCommand = new Updater();
+
+            PomodoroTimer.Start();
+
             Pomodoro = new Pomodoro();
 
             var repo = new LogRepository();
@@ -53,7 +54,7 @@ namespace Autodoro.ViewModel
                 OnWorkTimeRaised(new EventArgs());
             };
 
-            var timer = new DispatcherTimer()
+            var timer = new DispatcherTimer
             {
                 Interval = new TimeSpan(0, 0, 1)
             };
@@ -62,7 +63,7 @@ namespace Autodoro.ViewModel
             {
                 Pomodoro.Update();
 
-                TimeSpan currentDuration = Pomodoro.GetCurrentDuration();
+                var currentDuration = Pomodoro.GetCurrentDuration();
                 Duration = string.Format(
                     "{0}:{1}",
                     currentDuration.Minutes.ToString().PadLeft(2, '0'),
@@ -72,17 +73,30 @@ namespace Autodoro.ViewModel
 
             timer.Start();
 
-            Hook.GlobalEvents().KeyDown += (sender, e) => Pomodoro.LastActivityTime = DateTime.Now;
-            Hook.GlobalEvents().KeyPress += (sender, e) => Pomodoro.LastActivityTime = DateTime.Now;
-            Hook.GlobalEvents().MouseMove += (sender, e) => Pomodoro.LastActivityTime = DateTime.Now;
+            Hook.GlobalEvents().KeyDown += (sender, e) => Pomodoro.HadMovement();
+            Hook.GlobalEvents().KeyPress += (sender, e) => Pomodoro.HadMovement();
+            Hook.GlobalEvents().MouseMove += (sender, e) => Pomodoro.HadMovement();
+        }
+
+        public ICommand UpdateCommand { get; }
+
+        private Pomodoro Pomodoro { get; }
+
+        public string AppVersion { get; } = "Autodoro - v" + Util.GetAppVersion();
+
+        public PomodoroTimer PomodoroTimer
+        {
+            get => pomodoroTimer;
+            set
+            {
+                pomodoroTimer = value;
+                OnPropertyChanged(nameof(PomodoroTimer));
+            }
         }
 
         public int PomodoroCount
         {
-            get
-            {
-                return pomodoroCount;
-            }
+            get => pomodoroCount;
             set
             {
                 pomodoroCount = value;
@@ -92,10 +106,7 @@ namespace Autodoro.ViewModel
 
         public string Duration
         {
-            get
-            {
-                return duration;
-            }
+            get => duration;
             set
             {
                 duration = value;
@@ -106,10 +117,7 @@ namespace Autodoro.ViewModel
 
         public string ActivityName
         {
-            get
-            {
-                return activityName;
-            }
+            get => activityName;
             set
             {
                 activityName = value;
@@ -119,21 +127,48 @@ namespace Autodoro.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+#nullable enable
+        public PomodoroTimer GetNextPomodoro(PomodoroTimer? current)
+        {
+            return current == null || current.IsBreak
+                ? PomodoroTimer.PomodoroFocus()
+                : PomodoroTimer.PomodoroBreak();
+        }
+#nullable disable
+
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public event EventHandler BreakTimeRaised;
+
         protected virtual void OnBreakTimeRaised(EventArgs e)
         {
             BreakTimeRaised?.Invoke(this, e);
         }
 
         public event EventHandler WorkTimeRaised;
+
         protected virtual void OnWorkTimeRaised(EventArgs e)
         {
             WorkTimeRaised?.Invoke(this, e);
+        }
+
+        internal class Updater : ICommand
+        {
+            public event EventHandler CanExecuteChanged;
+
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public void Execute(object parameter)
+            {
+                Console.WriteLine(parameter);
+                Console.WriteLine("Executing");
+            }
         }
     }
 }

@@ -9,6 +9,7 @@
     <RootNamespace>Autodoro</RootNamespace>
     <AssemblyName>Autodoro</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
     <LangVersion>8.0</LangVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -30,7 +31,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ProductName>Autodoro</ProductName>
     <PublisherName>Sandae Macalalag</PublisherName>
-    <ApplicationRevision>14</ApplicationRevision>
+      <ApplicationRevision>17</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -96,19 +97,24 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Runtime" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
+      <Reference Include="System.Windows.Forms"/>
+      <Reference Include="System.Xml"/>
+      <Reference Include="Microsoft.CSharp"/>
+      <Reference Include="System.Core"/>
+      <Reference Include="System.Xml.Linq"/>
+      <Reference Include="System.Data.DataSetExtensions"/>
+      <Reference Include="System.Net.Http"/>
+      <Reference Include="System.Xaml">
+          <RequiredTargetFramework>4.0</RequiredTargetFramework>
+      </Reference>
+      <Reference Include="Windows">
+          <HintPath>E:\Windows Kits\10\UnionMetadata\Facade\Windows.WinMD</HintPath>
+      </Reference>
+      <Reference Include="Windows.Data"/>
+      <Reference Include="Windows.UI"/>
+      <Reference Include="WindowsBase"/>
+      <Reference Include="PresentationCore"/>
+      <Reference Include="PresentationFramework"/>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -116,20 +122,22 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="View\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
+        <Generator>MSBuild:Compile</Generator>
+        <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Lib\Util.cs" />
-    <Compile Include="Model\Log.cs" />
-    <Compile Include="Model\LogRepository.cs" />
-    <Compile Include="View\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+      <Compile Include="App.xaml.cs">
+          <DependentUpon>App.xaml</DependentUpon>
+          <SubType>Code</SubType>
+      </Compile>
+      <Compile Include="Lib\Util.cs"/>
+      <Compile Include="Model\Log.cs"/>
+      <Compile Include="Model\LogRepository.cs"/>
+      <Compile Include="Model\PomodoroTimer.cs"/>
+      <Compile Include="RelayCommand.cs"/>
+      <Compile Include="View\MainWindow.xaml.cs">
+          <DependentUpon>MainWindow.xaml</DependentUpon>
+          <SubType>Code</SubType>
+      </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Pomodoro.cs" />

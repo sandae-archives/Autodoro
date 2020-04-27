@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Configuration;
 using LiteDB;
 
 namespace Autodoro.Model
 {
     public class LogRepository
     {
+        private readonly ILiteCollection<Log> _collection;
         private readonly string _connectionString;
         private readonly ILiteDatabase _db;
-        private readonly ILiteCollection<Log> _collection;
 
         public LogRepository()
         {
-            _connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["LiteDB"].ConnectionString;
+            _connectionString = ConfigurationManager.ConnectionStrings["LiteDB"].ConnectionString;
             _db = new LiteDatabase(_connectionString);
             _collection = _db.GetCollection<Log>("logs");
         }

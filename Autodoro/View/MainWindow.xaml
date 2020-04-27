@@ -3,8 +3,8 @@
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
-        TextOptions.TextFormattingMode="Ideal" 
-        TextOptions.TextRenderingMode="Auto"        
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -22,11 +22,11 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <TextBlock Style="{DynamicResource MaterialDesignHeadline1TextBlock}" 
+            <TextBlock Style="{DynamicResource MaterialDesignHeadline1TextBlock}"
                        Text="{Binding ActivityName}" />
 
             <TextBlock Style="{DynamicResource MaterialDesignHeadline3TextBlock}"
@@ -34,9 +34,15 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock Style="{DynamicResource MaterialDesignCaptionTextBlock}" 
+            <TextBlock Style="{DynamicResource MaterialDesignCaptionTextBlock}"
                        Text="{Binding PomodoroCount, StringFormat=You completed {0} pomodoro today.}" />
+
+            <Button Command="{Binding Path=UpdateCommand}"
+                    CommandParameter="{Binding PomodoroTimer}">
+                Save
+            </Button>
         </StackPanel>
+
 
     </Grid>
 </Window>

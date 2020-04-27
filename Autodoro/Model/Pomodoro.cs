@@ -1,21 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
 
 namespace Autodoro.Model
 {
-    public class Pomodoro 
+    public class Pomodoro
     {
-        const int ALLOWED_IDLE_MINUTES = 5;
-        const int BREAK_MINUTES = 5;
-        const int WORK_MINUTES = 25;
+        private const int ALLOWED_IDLE_MINUTES = 5;
+        private const int ALLOWED_IDLE_MINUTES_AFTER_BREAK = 1;
+
+        private const int BREAK_MINUTES = 5;
+        private const int WORK_MINUTES = 25;
+
+        private bool didBreak;
 
         public bool IsBreakTime { get; private set; }
         public DateTime LastBreakTime { get; private set; } = DateTime.Now;
-        public DateTime LastActivityTime { get; set; } = DateTime.Now;
+        public DateTime LastActivityTime { get; private set; } = DateTime.Now;
+
+        public void HadMovement()
+        {
+            if (didBreak)
+                didBreak = false;
+
+            LastActivityTime = DateTime.Now;
+        }
 
         public TimeSpan GetCurrentDuration()
         {
@@ -26,22 +33,27 @@ namespace Autodoro.Model
         {
             if (IsBreakTime)
             {
-                TimeSpan diff = DateTime.Now.Subtract(LastBreakTime);
+                var diff = DateTime.Now.Subtract(LastBreakTime);
                 if (diff.Minutes >= BREAK_MINUTES)
                 {
                     OnWorkTimeRaised(new EventArgs());
                     LastBreakTime = DateTime.Now;
                     IsBreakTime = false;
+                    didBreak = true;
                 }
-            } else
+            }
+            else
             {
-                TimeSpan beenIdle = DateTime.Now.Subtract(LastActivityTime);
-                if (beenIdle.Minutes >= ALLOWED_IDLE_MINUTES)
+                if (didBreak)
                 {
-                    LastBreakTime = DateTime.Now;
+                    var beenIdleAfterBreak = DateTime.Now.Subtract(LastActivityTime);
+                    if (beenIdleAfterBreak.Minutes >= ALLOWED_IDLE_MINUTES_AFTER_BREAK) LastBreakTime = DateTime.Now;
                 }
 
-                TimeSpan beenWorking = DateTime.Now.Subtract(LastBreakTime);
+                var beenIdle = DateTime.Now.Subtract(LastActivityTime);
+                if (beenIdle.Minutes >= ALLOWED_IDLE_MINUTES) LastBreakTime = DateTime.Now;
+
+                var beenWorking = DateTime.Now.Subtract(LastBreakTime);
                 if (beenWorking.Minutes >= WORK_MINUTES)
                 {
                     OnBreakTimeRaised(new EventArgs());
@@ -52,16 +64,17 @@ namespace Autodoro.Model
         }
 
         public event EventHandler BreakTimeRaised;
+
         protected virtual void OnBreakTimeRaised(EventArgs e)
         {
             BreakTimeRaised?.Invoke(this, e);
         }
 
         public event EventHandler WorkTimeRaised;
+
         protected virtual void OnWorkTimeRaised(EventArgs e)
         {
             WorkTimeRaised?.Invoke(this, e);
         }
-
     }
 }
